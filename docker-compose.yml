@@ -1,0 +1,19 @@
+version: '3.2'
+
+services:
+  zookeeper:
+    image: kafka
+    network_mode: host
+    command: bin/zookeeper-server-start.sh config/zookeeper.properties
+    #ports:
+    #  - 2181:2181
+    restart: unless-stopped
+  broker:
+    image: kafka
+    network_mode: host
+    #ports:
+    #  - 9092:9092
+    command: bin/kafka-server-start.sh config/server.properties
+    depends_on:
+      - zookeeper
+    restart: unless-stopped
